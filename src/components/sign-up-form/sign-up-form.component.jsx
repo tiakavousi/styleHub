@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
-import Button from "../button/button-component";
+import Button from "../button/button.component";
 import './sign-up-form.styles.scss';
 
 
@@ -25,7 +25,7 @@ const SignUpForm = () =>{
 
     const handleSubmit = async(event)=> {
         event.preventDefault();
-        if(password != confirmPassword){
+        if(password !== confirmPassword){
             alert("Passwords do not match!");
             return;
         }
@@ -37,9 +37,9 @@ const SignUpForm = () =>{
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
         }catch(error){
-            if(error.code == "auth/email-already-in-use"){
+            if(error.code === "auth/email-already-in-use"){
                 alert("Can not create user, Email already in use!");
-            }else if(error.code == "auth/weak-password"){
+            }else if(error.code === "auth/weak-password"){
                 alert("Can not create user, Password should be at least 6 characters!");
             }else{
             console.log("User creation encountered an error ",error);
